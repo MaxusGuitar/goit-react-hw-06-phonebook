@@ -1,10 +1,15 @@
 import { useState } from "react";
 import style from "./form.module.css";
 import PropTypes from "prop-types";
+import { useSelector, useDispatch } from "react-redux";
+import { add, remove } from "../redux/store";
 
 const ContactForm = ({ onSubmit }) => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
+
+  const value = useSelector((state) => state.counter);
+  const dispatch = useDispatch();
 
   const onInputChange = (e) => {
     const ctg = e.currentTarget.name;
@@ -23,8 +28,9 @@ const ContactForm = ({ onSubmit }) => {
 
   const onSubmitForm = (e) => {
     e.preventDefault();
-    onSubmit({ name, number });
+    //onSubmit({ name, number });
     resetForm();
+    dispatch(add(e.currentTarget.elements.name.value));
   };
 
   return (

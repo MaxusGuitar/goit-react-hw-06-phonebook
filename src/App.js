@@ -4,6 +4,7 @@ import ContactForm from "./ContactForm";
 import FindContact from "./FindContact";
 import { useLocaleStorage } from "./hocks/useLocaleStorage";
 import shortid from "shortid";
+import { addContact } from "./redux/redux-things/action";
 import style from "./App.css";
 
 export default function App() {
@@ -24,7 +25,7 @@ export default function App() {
       return;
     }
     const c = {
-      id: shortid.generate(),
+      addContact,
       name,
       number,
     };
