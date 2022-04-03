@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import ContactList from "./ContactList";
 import ContactForm from "./ContactForm";
 import FindContact from "./FindContact";
+import { addContact } from "./redux/redux-things/action";
+import { connect } from "react-redux";
 import { useLocaleStorage } from "./hocks/useLocaleStorage";
 import shortid from "shortid";
-import { addContact } from "./redux/redux-things/action";
+
 import style from "./App.css";
 
 export default function App() {
