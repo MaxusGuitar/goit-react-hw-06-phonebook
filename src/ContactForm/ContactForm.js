@@ -1,11 +1,18 @@
 import { useState } from "react";
 import style from "./form.module.css";
 import PropTypes from "prop-types";
-import { getValue, getStep } from "@testing-library/user-event/dist/utils";
+import { increment } from "../redux/redux-things/action";
+import { useDispatch, useSelector } from "react-redux";
 
 const ContactForm = ({ onSubmit }) => {
+  const count = useSelector((state) => state.contacts.value);
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
+
+  // const add = () => {
+  //   dispatch(actions.addContact(value));
+  // };
 
   const onInputChange = (e) => {
     const ctg = e.currentTarget.name;
@@ -54,9 +61,9 @@ const ContactForm = ({ onSubmit }) => {
           required
         />
       </label>
-      <button type="submit">Add contact</button>
-      <button onClick={getValue}>+</button>
-      <button>-</button>
+      <button type="submit" onClick={() => dispatch(increment())}>
+        Add contact
+      </button>
     </form>
   );
 };

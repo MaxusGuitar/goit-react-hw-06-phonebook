@@ -1,14 +1,17 @@
 import React from "react";
 import ContactItem from "../ContactItem";
+import { decrement } from "../redux/redux-things/action";
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 
-function ContactList({ contacts, onDeleteContact }) {
+function ContactList({ contacts }) {
+  const dispatch = useDispatch();
   return (
     <ul>
       {contacts.map(({ id, name, number }) => (
-        <li key={id}>
+        <li>
           <ContactItem contactItem={{ name, number, id }} />
-          <button type="button" onClick={() => onDeleteContact(id)}>
+          <button type="button" onClick={() => dispatch(decrement())}>
             Delete
           </button>
         </li>

@@ -54,10 +54,7 @@ export default function App() {
       <ContactForm onSubmit={addContact} />
       <h2>Contacts</h2>
       <FindContact filter={filter} change={contactFind} />
-      <ContactList
-        contacts={getVisibleContacts()}
-        onDeleteContact={deleteContact}
-      />
+      <ContactList contacts={getVisibleContacts()} />
     </div>
   );
 }
