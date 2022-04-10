@@ -1,16 +1,22 @@
-import { combineReducers } from "@reduxjs/toolkit";
-import reduserTypes from "./redux-types";
-import { addContact, deleteContact } from "./action";
+import { combineReducers } from "redux";
 import { createReducer } from "@reduxjs/toolkit";
+import actions from "./action";
 
-const valueReduser = createReducer([], {
-  [addContact]: (state, action) => state + action.payload,
-  [deleteContact]: (state, action) => state - action.payload,
+const items = createReducer([], {
+  [actions.addTodo]: (state, { payload }) => [...state, payload],
+  [actions.deleteTodo]: (state, { payload }) =>
+    state.filter(({ id }) => id !== payload),
+  [actions.toggleCompleted]: (state, { payload }) =>
+    state.map((todo) =>
+      todo.id === payload ? { ...todo, completed: !todo.completed } : todo
+    ),
 });
 
-const stateReduser = (state = 5, action) => state;
+const filter = createReducer("", {
+  [actions.changeFilter]: (_, { payload }) => payload,
+});
 
 export default combineReducers({
-  value: valueReduser,
-  step: stateReduser,
+  items,
+  filter,
 });

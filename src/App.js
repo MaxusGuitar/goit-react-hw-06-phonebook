@@ -2,20 +2,18 @@ import { useState, useEffect } from "react";
 import ContactList from "./ContactList";
 import ContactForm from "./ContactForm";
 import FindContact from "./FindContact";
-import { addContact } from "./redux/redux-things/action";
-import { connect } from "react-redux";
+import actions from "./redux/redux-things/action";
+import { useDispatch } from "react-redux";
 import { useLocaleStorage } from "./hocks/useLocaleStorage";
-import shortid from "shortid";
+//import shortid from "shortid";
 
 import style from "./App.css";
 
 export default function App() {
   const [contacts, setContacts] = useLocaleStorage("contacts", []);
   const [filter, setFilter] = useState("");
-
-  const deleteContact = (contactid) => {
-    setContacts((contacts) => contacts.filter((c) => c.id !== contactid));
-  };
+  const dispatch = useDispatch();
+  const deleteContact = (id) => dispatch(actions.deleteTodo(id));
 
   const addContact = ({ name, number }) => {
     if (
@@ -54,7 +52,10 @@ export default function App() {
       <ContactForm onSubmit={addContact} />
       <h2>Contacts</h2>
       <FindContact filter={filter} change={contactFind} />
-      <ContactList contacts={getVisibleContacts()} />
+      <ContactList
+        onDeleteContact={({ id }) => deleteContact(id)}
+        contacts={getVisibleContacts()}
+      />
     </div>
   );
 }

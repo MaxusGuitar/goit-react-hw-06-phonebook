@@ -1,7 +1,7 @@
 import { useState } from "react";
 import style from "./form.module.css";
 import PropTypes from "prop-types";
-import { increment } from "../redux/redux-things/action";
+import actions from "../redux/redux-things/action";
 import { useDispatch, useSelector } from "react-redux";
 
 const ContactForm = ({ onSubmit }) => {
@@ -10,18 +10,11 @@ const ContactForm = ({ onSubmit }) => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
 
-  // const add = () => {
-  //   dispatch(actions.addContact(value));
-  // };
-
-  const onInputChange = (e) => {
-    const ctg = e.currentTarget.name;
-    if (ctg === "name") {
-      setName(e.currentTarget.value);
-    }
-    if (ctg === "number") {
-      setNumber(e.currentTarget.value);
-    }
+  const onInputChangeName = (e) => {
+    setName(e.target.value);
+  };
+  const onInputChangeNumber = (e) => {
+    setNumber(e.target.value);
   };
 
   const resetForm = () => {
@@ -31,6 +24,14 @@ const ContactForm = ({ onSubmit }) => {
 
   const onSubmitForm = (e) => {
     e.preventDefault();
+    const ctg = e.currentTarget.name;
+
+    if (ctg === "name") {
+      dispatch(actions.addTodo(name));
+    }
+    if (ctg === "number") {
+      dispatch(actions.addTodo(number));
+    }
     onSubmit({ name, number });
     resetForm();
   };
@@ -45,7 +46,7 @@ const ContactForm = ({ onSubmit }) => {
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           value={name}
-          onChange={onInputChange}
+          onChange={onInputChangeName}
           required
         />
       </label>
@@ -57,13 +58,11 @@ const ContactForm = ({ onSubmit }) => {
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           value={number}
-          onChange={onInputChange}
+          onChange={onInputChangeNumber}
           required
         />
       </label>
-      <button type="submit" onClick={() => dispatch(increment())}>
-        Add contact
-      </button>
+      <button type="submit">Add contact</button>
     </form>
   );
 };
