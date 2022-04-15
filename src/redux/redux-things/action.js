@@ -1,19 +1,7 @@
-import shortid from "shortid";
 import { createAction } from "@reduxjs/toolkit";
 
-const addTodo = createAction("todos/add", (text) => ({
-  payload: {
-    id: shortid.generate(),
-    text,
-    completed: false,
-  },
-}));
+export const addTodo = createAction("contacts/add");
 
-const deleteTodo = createAction("todos/delete");
+export const deleteTodo = createAction("contacts/delete");
 
-const changeFilter = createAction("todos/changeFilter");
-
-const toggleCompleted = createAction("todos/toggleCompleted");
-
-const todosActions = { addTodo, deleteTodo, changeFilter, toggleCompleted };
-export default todosActions;
+export const changeFilter = createAction("contacts/changeFilter");
